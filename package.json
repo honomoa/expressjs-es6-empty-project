@@ -1,0 +1,27 @@
+{
+  "name": "expressjs-es6-empty-project",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "engines": {
+    "node": ">=6.11.1 < 9.0.0"
+  },
+  "scripts": {
+    "start": "NODE_ENV=development NODE_PATH=. HTTP_PORT=3001 DEBUG_LEVEL=1 node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Moa",
+  "license": "ISC",
+  "dependencies": {
+    "MoaLog": "github:honomoa/MoaLog",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "lodash": "^4.17.4",
+    "moment": "^2.19.3",
+    "morgan": "^1.9.0",
+    "nunjucks": "^3.0.1",
+    "serve-favicon": "^2.4.5"
+  }
+}

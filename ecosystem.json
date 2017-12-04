@@ -1,0 +1,23 @@
+{
+  "apps" : [
+    {
+      "name": "empty-project",
+      "script": "server.js",
+      "interpreter_args": [],
+      "watch": [],
+      "env": {
+        "NODE_ENV": "development",
+        "NODE_PATH": ".",
+        "HTTP_PORT": 5110,
+        "DEBUG_LEVEL": 2,
+        "GRACEFUL_SHUTDOWN": true,
+        "GRACEFUL_SHUTDOWN_DELAY": 5000,
+        "IS_PM2": true
+      },
+      "error_file": "/var/log/pm2/empty-project.err",
+      "out_file": "/var/log/pm2/empty-project.log",
+      "merge_logs": true,
+      "": ""
+    }
+  ]
+}
