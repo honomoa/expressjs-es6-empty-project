@@ -1,39 +1,48 @@
-'use strict';
 
 const http = require('http');
 
-require('global');
-const app = require('app');
+const chalk = require('chalk');
 
+const config = require('./config');
+const app = require('./app');
+
+let application = app();
 let server;
-let port = process.env.HTTP_PORT || 3000;
 
 try {
-  server = http.createServer(app).listen(port, () => {
-    MoaLog.info('New server has been start at port ' + (port + '').red);
+  application.set('isReady', false);
+  server = http.createServer(application).listen(config.http.port, () => {
+    L.info('New server has been start at port ' + chalk.red(config.http.port));
+    application.set('isReady', true);
   });
 } catch (err) {
-  MoaLog.error('catch error: %s', err);
+  L.error('catch error: %s', err);
 }
 
-if (process.env.GRACEFUL_SHUTDOWN) {
-  process.on('SIGTERM', () => {
-    MoaLog.info('received SIGTERM');
-    stop();
-  });
-  
-  process.on('SIGINT', () => {
-    MoaLog.info('received SIGINT');
-    stop();
-  });
-  
-  function stop() {
+process.on('SIGTERM', () => {
+  L.info('received SIGTERM');
+  stop();
+});
+
+process.on('SIGINT', () => {
+  L.info('received SIGINT');
+  stop();
+});
+
+function stop() {
+  application.set('isReady', false);
+  if (process.env.NODE_ENV === 'development' || !config.graceful_shutdown) {
+    process.exit(0);
+  } else {
     server.close(() => {
-      MoaLog.info('Exiting after 5 seconds.');
+      L.info('Exiting after 5 seconds.');
       setTimeout(() => {
         process.exit(0);
-      }, process.env.GRACEFUL_SHUTDOWN_DELAY || 5000);
+      }, config.graceful_shutdown_ms);
     });
   }
-  
 }
+
+process.on('unhandledRejection', (reason) => {
+  L.crit(reason);
+});

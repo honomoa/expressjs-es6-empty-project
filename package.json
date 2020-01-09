@@ -1,27 +1,39 @@
 {
   "name": "expressjs-es6-empty-project",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "server.js",
   "engines": {
-    "node": ">=6.11.1 < 9.0.0"
+    "node": ">=6.11.1 < 11.0.0"
   },
   "scripts": {
-    "start": "NODE_ENV=development NODE_PATH=. HTTP_PORT=3001 DEBUG_LEVEL=1 node server.js",
+    "start": "node $npm_package_main",
+    "startd": "NODE_PATH=. NODE_ENV=development node $npm_package_main",
+    "lint": "eslint ./*.js ./config ./lib ./routes",
+    "lint:fix": "eslint --fix ./*.js ./config ./lib ./routes",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Moa",
+  "author": "Moa Chung",
   "license": "ISC",
   "dependencies": {
     "MoaLog": "github:honomoa/MoaLog",
-    "body-parser": "^1.18.2",
-    "cookie-parser": "^1.4.3",
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.2",
+    "cookie-parser": "^1.4.4",
     "cors": "^2.8.4",
-    "express": "^4.16.2",
-    "lodash": "^4.17.4",
+    "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "moment": "^2.19.3",
-    "morgan": "^1.9.0",
+    "morgan": "^1.9.1",
     "nunjucks": "^3.0.1",
     "serve-favicon": "^2.4.5"
+  },
+  "devDependencies": {
+    "eslint": "^5.14.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0"
   }
 }

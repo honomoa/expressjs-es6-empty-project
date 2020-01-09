@@ -1,0 +1,31 @@
+---
+
+env:
+  browser: true
+  commonjs: true
+  es6: true
+  node: true
+extends: standard
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+  _: readonly
+  L: readonly
+parserOptions:
+  ecmaVersion: 2018
+rules:
+  indent:
+    - error
+    - 2
+  semi:
+    - error
+    - always
+  space-before-function-paren:
+    - error
+    - never
+  array-bracket-spacing:
+    - error
+    - always
+  comma-dangle:
+    - error
+    - always-multiline

@@ -1,30 +1,41 @@
-'use strict';
-
-const util = require('util');
 
 const express = require('express');
 
-const BasicRouter = require('lib/BasicRouter');
-
-class HomeRouter extends BasicRouter {
-  setRouter() {
-    this.routerMap.addRouter('get', `/`, this.getHome);
-    this.routerMap.addRouter('get', `/error`, this.getError);
-    this.routerMap.addRouter('get', `/resisted`, this.getHome, this.ensureAuthorized);
-    return this;
-  }
-
-  ensureAuthorized(req, res, next) {
-    res.sendStatus(403);
-  }
-
-  getHome(req, res, next) {
-    res.render('index', {title: 'Home'});
-  }
-
-  getError(req, res, next) {
-    throw new Error('Error');
-  }
-}
+const RouteUtil = require('../lib/RouteUtil');
 
 module.exports = HomeRouter;
+
+function HomeRouter() {
+  let routeUtil = new RouteUtil();
+
+  // Add routers
+  routeUtil.addRouter('get', '/', getHome);
+  routeUtil.addRouter('get', '/error', getError);
+  routeUtil.addRouter('get', '/restricted', getHome, ensureAuthorized);
+
+  // Bind router
+  let expressRouter = express.Router({ mergeParams: true });
+  routeUtil.binding(expressRouter);
+
+  return expressRouter;
+}
+
+function getHome(req, res, next) {
+  res.render('index', { title: 'Home' });
+}
+
+function getError(req, res, next) {
+  throw new Error('Error');
+}
+
+function ensureAuthorized(req, res, next) {
+  if (false) {
+    next();
+  } else {
+    if (process.env.NODE_ENV === 'development') {
+      next();
+    } else {
+      res.sendStatus(403);
+    }
+  }
+}
